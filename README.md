@@ -7,6 +7,8 @@ Intelligent Expense Tracking and Financial Insights from Gmail.
 - **Google OAuth**: One-click login and Gmail synchronization.
 - **AI-Powered Parsing**: Automatically extracts purchases, receipts, and subscriptions from emails using Google's Gemini AI.
 - **Smart Subscriptions**: Tracks your active and inactive subscriptions and detects silent price hikes!
+- **Junk Fee Exposé 🤬**: Exposes the hidden "Service Fees" and "Delivery Fees" that corporate giants sneak into your receipts.
+- **Inbox Wrapped 🎁**: A highly viral, Instagram-Stories style summary of your yearly spending habits, including your most toxic late-night shopping traits.
 - **Interactive Dashboard**: View charts, recent expenses, and export them.
 - **Automated Reports**: Schedule or instantly generate PDF/CSV reports to your email.
 - **Dark Mode**: Because every app needs one.
