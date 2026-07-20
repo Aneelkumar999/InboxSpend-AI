@@ -23,7 +23,7 @@ export default function Login({ onLogin }: { onLogin: () => void }) {
       }
     },
     onError: () => setError('Google Login Failed'),
-    scope: 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.send',
+    scope: 'openid email profile https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.send',
   });
 
   return (
