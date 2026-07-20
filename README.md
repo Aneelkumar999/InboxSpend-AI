@@ -9,6 +9,7 @@ Intelligent Expense Tracking and Financial Insights from Gmail.
 - **Smart Subscriptions**: Tracks your active and inactive subscriptions and detects silent price hikes!
 - **Junk Fee Exposé 🤬**: Exposes the hidden "Service Fees" and "Delivery Fees" that corporate giants sneak into your receipts.
 - **Inbox Wrapped 🎁**: A highly viral, Instagram-Stories style summary of your yearly spending habits, including your most toxic late-night shopping traits.
+- **AI Financial Advisor (Chat)**: A floating AI assistant that can answer questions about your spending habits, analyze trends, and give financial advice based on your receipt history.
 - **Interactive Dashboard**: View charts, recent expenses, and export them.
 - **Automated Reports**: Schedule or instantly generate PDF/CSV reports to your email.
 - **Dark Mode**: Because every app needs one.
