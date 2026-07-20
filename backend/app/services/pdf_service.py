@@ -6,7 +6,7 @@ import matplotlib
 matplotlib.use('Agg') # non-interactive backend
 import matplotlib.pyplot as plt
 from jinja2 import Environment, FileSystemLoader
-from weasyprint import HTML
+from xhtml2pdf import pisa
 from sqlalchemy.orm import Session
 from app.services.report_service import ReportService
 from app.services.analytics_service import FinancialAnalyticsEngine
@@ -156,6 +156,7 @@ class PDFService:
             insights=insights
         )
         
-        # Weasyprint converts HTML to PDF
-        pdf_bytes = HTML(string=html_out).write_pdf()
-        return pdf_bytes
+        # xhtml2pdf converts HTML to PDF
+        pdf_buf = io.BytesIO()
+        pisa_status = pisa.CreatePDF(io.StringIO(html_out), dest=pdf_buf)
+        return pdf_buf.getvalue()
