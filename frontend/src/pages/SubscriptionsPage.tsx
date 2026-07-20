@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchSubscriptions } from '../services/api';
 import { Link } from 'react-router-dom';
-import { Activity, LogOut, Sun, Moon, AlertTriangle, CheckCircle, FileText, Repeat } from 'lucide-react';
+import { Activity, LogOut, Sun, Moon, AlertTriangle, CheckCircle, FileText, Repeat, AlertOctagon } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function SubscriptionsPage({ onLogout }: { onLogout: () => void }) {
@@ -60,6 +60,12 @@ export default function SubscriptionsPage({ onLogout }: { onLogout: () => void }
                 className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center"
               >
                 <FileText size={16} className="mr-1.5"/> Reports
+              </Link>
+              <Link 
+                to="/junk-fees" 
+                className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center"
+              >
+                <AlertOctagon size={16} className="mr-1.5"/> Junk Fees
               </Link>
             </nav>
           </motion.div>

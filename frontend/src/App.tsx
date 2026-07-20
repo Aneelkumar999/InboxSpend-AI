@@ -4,6 +4,8 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Reports from './pages/Reports';
 import SubscriptionsPage from './pages/SubscriptionsPage';
+import JunkFeesPage from './pages/JunkFeesPage';
+import WrappedPage from './pages/WrappedPage';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -38,6 +40,11 @@ function App() {
           localStorage.removeItem('token');
           setIsAuthenticated(false);
         }} />} />
+        <Route path="/junk-fees" element={<JunkFeesPage onLogout={() => {
+          localStorage.removeItem('token');
+          setIsAuthenticated(false);
+        }} />} />
+        <Route path="/wrapped" element={<WrappedPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

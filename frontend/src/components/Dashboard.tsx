@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchDashboard, fetchExpenses, syncExpenses } from '../services/api';
 import { Link } from 'react-router-dom';
-import { RefreshCw, DollarSign, Calendar, TrendingUp, LogOut, Moon, Sun, Download, Search, Filter, ShoppingBag, CreditCard, Activity, FileText, Loader2, Repeat } from 'lucide-react';
+import { RefreshCw, DollarSign, Calendar, TrendingUp, LogOut, Moon, Sun, Download, Search, Filter, ShoppingBag, CreditCard, Activity, FileText, Loader2, Repeat, AlertOctagon, Gift } from 'lucide-react';
 import { format } from 'date-fns';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import html2canvas from 'html2canvas';
@@ -131,6 +131,12 @@ export default function Dashboard({ onLogout }: { onLogout: () => void }) {
               >
                 <FileText size={16} className="mr-1.5"/> Reports
               </Link>
+              <Link 
+                to="/junk-fees" 
+                className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center"
+              >
+                <AlertOctagon size={16} className="mr-1.5"/> Junk Fees
+              </Link>
             </nav>
           </motion.div>
           
@@ -151,6 +157,29 @@ export default function Dashboard({ onLogout }: { onLogout: () => void }) {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        {/* Inbox Wrapped Banner */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+          className="bg-gradient-to-r from-fuchsia-600 to-purple-600 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between text-white shadow-xl shadow-purple-500/20"
+        >
+          <div className="flex items-center space-x-4 mb-4 sm:mb-0">
+            <div className="p-4 bg-white/20 rounded-2xl backdrop-blur-md">
+              <Gift size={32} className="text-white" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-display font-black tracking-tight">Your Inbox Wrapped is Here!</h2>
+              <p className="text-purple-100">See your most toxic spending habits and top merchants of the year.</p>
+            </div>
+          </div>
+          <Link 
+            to="/wrapped" 
+            className="px-6 py-3 bg-white text-purple-700 font-bold rounded-xl hover:bg-gray-100 transition-colors whitespace-nowrap shadow-lg"
+          >
+            View Wrapped 🎁
+          </Link>
+        </motion.div>
+
         {/* Controls Section */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
           <motion.h2 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Activity, Moon, Sun, LogOut, FileText, Download, Mail, Clock, ArrowRight, CheckCircle2, Repeat } from 'lucide-react';
+import { Activity, Moon, Sun, LogOut, FileText, Download, Mail, Clock, ArrowRight, CheckCircle2, Repeat, AlertOctagon } from 'lucide-react';
 import { downloadReport, emailReport, createReportSchedule, getReportSchedules } from '../services/api';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -81,6 +81,12 @@ export default function Reports({ onLogout }: { onLogout: () => void }) {
                 className="text-gray-900 dark:text-white font-medium flex items-center relative after:absolute after:bottom-[-1.25rem] after:left-0 after:w-full after:h-0.5 after:bg-blue-600 dark:after:bg-blue-400"
               >
                 <FileText size={16} className="mr-1.5"/> Reports
+              </Link>
+              <Link 
+                to="/junk-fees" 
+                className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center"
+              >
+                <AlertOctagon size={16} className="mr-1.5"/> Junk Fees
               </Link>
             </nav>
           </motion.div>

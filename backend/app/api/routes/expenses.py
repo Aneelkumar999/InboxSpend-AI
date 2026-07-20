@@ -7,7 +7,7 @@ from datetime import datetime, timezone, timedelta
 from app.db.database import get_db
 from app.db.models import User, Expense
 from app.api.dependencies import get_current_user
-from app.schemas.expense import ExpenseResponse, DashboardResponse, ChartData, FinancialInsights, SubscriptionResponse
+from app.schemas.expense import ExpenseResponse, DashboardResponse, ChartData, FinancialInsights, SubscriptionResponse, JunkFeeResponse, JunkFeeOffender, WrappedResponse
 from app.services.gmail_service import GmailService
 from app.services.analytics_service import FinancialAnalyticsEngine
 
@@ -261,6 +261,81 @@ def get_subscriptions(
         )
         
     return responses
+
+@router.get("/junk-fees", response_model=JunkFeeResponse)
+def get_junk_fees(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+) -> Any:
+    # Get all expenses with junk fees
+    fees_expenses = db.query(Expense).filter(
+        Expense.user_id == current_user.id,
+        Expense.junk_fees > 0
+    ).order_by(Expense.date.desc()).all()
+    
+    total_fees = sum(exp.junk_fees for exp in fees_expenses) if fees_expenses else 0.0
+    
+    # Group by merchant
+    grouped = {}
+    for exp in fees_expenses:
+        grouped[exp.merchant] = grouped.get(exp.merchant, 0.0) + float(exp.junk_fees)
+        
+    offenders = [JunkFeeOffender(merchant=m, total_fees=f) for m, f in grouped.items()]
+    offenders.sort(key=lambda x: x.total_fees, reverse=True)
+    
+    return JunkFeeResponse(
+        total_junk_fees=float(total_fees),
+        top_offenders=offenders[:10], # Top 10 worst offenders
+        recent_fees=fees_expenses[:20] # Last 20 instances
+    )
+
+@router.get("/wrapped", response_model=WrappedResponse)
+def get_wrapped(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+) -> Any:
+    # 1. Total Spent
+    total_spent = db.query(func.sum(Expense.amount)).filter(Expense.user_id == current_user.id).scalar() or 0.0
+
+    # 2. Top Merchant
+    top_merchant_row = db.query(
+        Expense.merchant, func.sum(Expense.amount).label("total")
+    ).filter(Expense.user_id == current_user.id).group_by(Expense.merchant).order_by(func.sum(Expense.amount).desc()).first()
+    
+    top_merchant = top_merchant_row[0] if top_merchant_row else "Unknown"
+    top_merchant_amount = float(top_merchant_row[1]) if top_merchant_row else 0.0
+
+    # 3. Top Category
+    top_category_row = db.query(
+        Expense.category, func.sum(Expense.amount).label("total")
+    ).filter(Expense.user_id == current_user.id).group_by(Expense.category).order_by(func.sum(Expense.amount).desc()).first()
+    
+    top_category = top_category_row[0] if top_category_row else "Unknown"
+
+    # 4. Late Night Purchases (Midnight to 5 AM)
+    # Note: Extracting hour depends on the timezone of the DB. We'll use simple extraction.
+    late_night_count = db.query(func.count(Expense.id)).filter(
+        Expense.user_id == current_user.id,
+        func.extract('hour', Expense.date) >= 0,
+        func.extract('hour', Expense.date) <= 5
+    ).scalar() or 0
+
+    # 5. Busiest Day of Week
+    busiest_day_row = db.query(
+        func.extract('isodow', Expense.date).label("dow"), func.count(Expense.id).label("count")
+    ).filter(Expense.user_id == current_user.id).group_by("dow").order_by(func.count(Expense.id).desc()).first()
+    
+    days_map = {1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday", 7: "Sunday"}
+    busiest_day = days_map.get(int(busiest_day_row[0]), "Unknown") if busiest_day_row and busiest_day_row[0] else "Unknown"
+
+    return WrappedResponse(
+        total_spent=float(total_spent),
+        top_merchant=top_merchant,
+        top_merchant_amount=top_merchant_amount,
+        top_category=top_category,
+        late_night_purchases=late_night_count,
+        busiest_day=busiest_day
+    )
 
 @router.get("/insights", response_model=FinancialInsights)
 def get_insights(

@@ -85,3 +85,13 @@ export const fetchSubscriptions = async () => {
   const response = await api.get('/expenses/subscriptions');
   return response.data;
 };
+
+export const getJunkFees = async () => {
+  const response = await api.get('/expenses/junk-fees');
+  return response.data;
+};
+
+export const getWrappedStats = async () => {
+  const response = await api.get('/expenses/wrapped');
+  return response.data;
+};

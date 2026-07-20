@@ -138,6 +138,7 @@ class GmailService:
                         discount=ai_receipt.discount,
                         is_subscription=ai_receipt.is_subscription,
                         billing_cycle=ai_receipt.billing_cycle,
+                        junk_fees=ai_receipt.junk_fees,
                         confidence_score=ai_receipt.confidence_score
                     )
                 else:

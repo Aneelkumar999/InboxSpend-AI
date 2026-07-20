@@ -40,6 +40,7 @@ class ParsedReceipt(BaseModel):
     discount: Optional[float] = Field(default=None, description="Total discount amount")
     is_subscription: Optional[bool] = Field(default_factory=default_false, description="True if this looks like a recurring subscription payment")
     billing_cycle: Optional[str] = Field(default=None, description="Billing cycle if this is a subscription (e.g. Monthly, Annual, Weekly)")
+    junk_fees: Optional[float] = Field(default=None, description="Total amount of administrative fees, service fees, convenience fees, delivery fees, or processing fees.")
     confidence_score: Optional[float] = Field(default_factory=default_confidence, description="Your confidence score in the extraction accuracy from 0.0 to 1.0")
 
 class AIParsingService:
@@ -78,6 +79,7 @@ class AIParsingService:
         - discount: Total discount
         - is_subscription: True if recurring payment
         - billing_cycle: If is_subscription is True, the billing cycle (Monthly, Annual, Weekly). Null otherwise.
+        - junk_fees: Find and sum any hidden "Service Fees", "Convenience Fees", "Delivery Fees", "Processing Fees", or "Platform Fees" explicitly listed in the email. Return as a float (e.g. 5.99).
         - confidence_score: A number from 0.0 to 1.0 evaluating how confident you are in the accuracy.
         
         Raw Email Text:

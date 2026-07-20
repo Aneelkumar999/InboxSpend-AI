@@ -43,6 +43,7 @@ class Expense(Base):
     discount = Column(Numeric(10, 2), nullable=True)
     is_subscription = Column(Boolean, nullable=True, default=False)
     billing_cycle = Column(String(50), nullable=True)
+    junk_fees = Column(Numeric(10, 2), nullable=True, default=0.00)
     confidence_score = Column(Numeric(3, 2), nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))

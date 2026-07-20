@@ -21,6 +21,7 @@ class ExpenseBase(BaseModel):
     discount: Optional[Decimal] = None
     is_subscription: Optional[bool] = False
     billing_cycle: Optional[str] = None
+    junk_fees: Optional[Decimal] = None
     confidence_score: Optional[Decimal] = None
 
 class ExpenseCreate(ExpenseBase):
@@ -69,3 +70,20 @@ class FinancialInsights(BaseModel):
     abnormal_spending: List[str]
     recurring_subscriptions: List[str]
     duplicate_transactions: List[str]
+
+class JunkFeeOffender(BaseModel):
+    merchant: str
+    total_fees: float
+
+class JunkFeeResponse(BaseModel):
+    total_junk_fees: float
+    top_offenders: List[JunkFeeOffender]
+    recent_fees: List[ExpenseResponse]
+
+class WrappedResponse(BaseModel):
+    total_spent: float
+    top_merchant: str
+    top_merchant_amount: float
+    top_category: str
+    late_night_purchases: int
+    busiest_day: str
