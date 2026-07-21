@@ -27,7 +27,7 @@ export default function Login({ onLogin }: { onLogin: () => void }) {
   });
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-dark-900 flex items-center justify-center font-sans">
+    <div className="relative min-h-screen overflow-hidden bg-gray-50 dark:bg-dark-900 flex items-center justify-center font-sans">
       {/* Animated Mesh Gradient Background Elements */}
       <div className="absolute top-0 -left-4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-blob"></div>
       <div className="absolute top-0 -right-4 w-96 h-96 bg-violet-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-blob animation-delay-2000"></div>
@@ -60,7 +60,7 @@ export default function Login({ onLogin }: { onLogin: () => void }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="text-3xl font-display font-bold text-white tracking-tight"
+                className="text-3xl font-display font-bold text-gray-900 dark:text-white tracking-tight"
               >
                 InboxSpend <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">AI</span>
               </motion.h2>
@@ -68,7 +68,7 @@ export default function Login({ onLogin }: { onLogin: () => void }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="text-gray-400 text-sm font-medium"
+                className="text-gray-500 dark:text-gray-400 text-sm font-medium"
               >
                 Intelligent Expense Tracking & Financial Insights from Gmail.
               </motion.p>
