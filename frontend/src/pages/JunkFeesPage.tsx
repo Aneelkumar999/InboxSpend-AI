@@ -3,7 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { getJunkFees } from '../services/api';
 import { Link } from 'react-router-dom';
 import { Activity, LogOut, Sun, Moon, AlertOctagon, TrendingDown, DollarSign, Repeat, FileText } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Header } from '../components/Header';
 
 export default function JunkFeesPage({ onLogout }: { onLogout: () => void }) {
   const [darkMode, setDarkMode] = useState(false);
@@ -29,30 +30,12 @@ export default function JunkFeesPage({ onLogout }: { onLogout: () => void }) {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-dark-900 font-sans transition-colors duration-300">
-      <header className="sticky top-0 z-40 glass border-b border-gray-200/50 dark:border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex items-center space-x-8">
-            <h1 className="text-2xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400 flex items-center">
-              <Activity className="mr-2 text-blue-600 dark:text-blue-400" /> InboxSpend
-            </h1>
-            <nav className="hidden sm:flex space-x-6">
-              <Link to="/" className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Dashboard</Link>
-              <Link to="/subscriptions" className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center"><Repeat size={16} className="mr-1.5"/> Subscriptions</Link>
-              <Link to="/reports" className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors flex items-center"><FileText size={16} className="mr-1.5"/> Reports</Link>
-              <Link to="/junk-fees" className="text-gray-900 dark:text-white font-medium relative after:absolute after:bottom-[-1.25rem] after:left-0 after:w-full after:h-0.5 after:bg-red-500 flex items-center text-red-600 dark:text-red-400"><AlertOctagon size={16} className="mr-1.5"/> Junk Fees</Link>
-            </nav>
-          </motion.div>
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex items-center space-x-2">
-            <button onClick={toggleDarkMode} className="p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-dark-700 transition-colors">
-              {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
-            <div className="w-px h-6 bg-gray-200 dark:bg-dark-700 mx-2"></div>
-            <button onClick={onLogout} className="flex items-center px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-dark-700 transition-colors">
-              <LogOut size={16} className="mr-2" /> Logout
-            </button>
-          </motion.div>
-        </div>
-      </header>
+      <Header 
+        activePath="/junk-fees" 
+        onLogout={onLogout} 
+        darkMode={darkMode} 
+        toggleDarkMode={toggleDarkMode} 
+      />
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
         <div className="text-center">
